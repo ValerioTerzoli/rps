@@ -6,6 +6,7 @@
 //global variables
 let playerDisplay;
 let computerDisplay;
+let roundDisplay;
 let PTW = 0;    //PTW=points to win
 let P = 0;      //P=player points
 let CPU = 0;    //CPU=computer points
@@ -46,11 +47,27 @@ enter.addEventListener("click", (e) => {
         buttonContainer.appendChild(button);
     });
     document.body.appendChild(buttonContainer);
+    //create round result display
+    roundDisplay = document.createElement("div");
+    roundDisplay.id = "roundDisplay";
+    buttonContainer.appendChild(roundDisplay);
+    //create final display
+    const final = document.createElement("div");
+    final.id = "final";
+    //buttons
     const btnq = document.querySelectorAll(".btn");
     btnq.forEach((element) => element.addEventListener("click", (e) => {
         playRound(e.target.id,getComputerChoice());
-        if(P == PTW) console.log("You Win!");
-        else if(CPU == PTW) console.log("You Lose!");
+        if(P == PTW){
+            buttonContainer.remove();
+            final.textContent = "You Win!";
+            document.body.appendChild(final);
+        }
+        else if(CPU == PTW){
+            buttonContainer.remove();
+            final.textContent = "You Lose!";
+            document.body.appendChild(final);
+        }
     }));
 
 
@@ -72,39 +89,40 @@ function getComputerChoice(){
 }
 
 function playRound(player,computer){
-    if(player === computer) console.log("Tie");
+    roundDisplay.textContent = "Computer played " + computer;
+    if(player === computer) roundDisplay.textContent = roundDisplay.textContent + "\nTie";
     else if(player === "rock"){
         if(computer === "paper"){
-            console.log("Lose Round");
+            roundDisplay.textContent = roundDisplay.textContent + "\nLose Round";
             CPU++;
             computerDisplay.textContent = "COMPUTER: " + CPU;
         }
         else{      //only option left is rock - scissors
-            console.log("Win Round");
+            roundDisplay.textContent = roundDisplay.textContent + "\nWin Round";
             P++;
             playerDisplay.textContent = "PLAYER: " + P;
         }
     }
     else if(player === "paper"){
         if(computer === "scissors"){
-            console.log("Lose Round");
+            roundDisplay.textContent = roundDisplay.textContent + "\nLose Round";
             CPU++;
             computerDisplay.textContent = "COMPUTER: " + CPU;
         }
         else{      //only option left is paper - rock
-            console.log("Win Round");
+            roundDisplay.textContent = roundDisplay.textContent + "\nWin Round";
             P++;
             playerDisplay.textContent = "PLAYER: " + P;
         }
     }
     else if(player === "scissors"){
         if(computer === "rock"){
-            console.log("Lose Round");
+            roundDisplay.textContent = roundDisplay.textContent + "\nLose Round";
             CPU++;
             computerDisplay.textContent = "COMPUTER: " + CPU;
         }
         else{      //only option left is scissors - paper
-            console.log("Win Round");
+            roundDisplay.textContent = roundDisplay.textContent + "\nWin Round";
             P++;
             playerDisplay.textContent = "PLAYER: " + P;
         }
