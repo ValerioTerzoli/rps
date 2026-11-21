@@ -65,27 +65,49 @@ function playGame(PTW){ //PTW=Points To Win
 
 //On Load
 
+//global variables
+let PTW = 0;    //PTW=points to win
+let P = 0;      //P=player points
+let CPU = 0;    //CPU=computer points
 
+const label = document.querySelector("label");
 const points = document.querySelector("input");
 const enter = document.getElementById("submit");
 enter.addEventListener("click", (e) => {
     e.preventDefault();
     PTW = points.value;
+    console.log(PTW);
+    //clear screen
+    label.remove();
+    points.remove();
+    enter.remove();
+    //create buttons for player input
+    const container = document.createElement("div");
+    const ids = ["rock","paper","scissors"];
+    ids.forEach(item => {
+        const button = document.createElement("button");
+        button.classList.add("btn");
+        button.id = item;
+        container.appendChild(button);
+    });
+    document.body.appendChild(container);
+    const btnq = document.querySelectorAll(".btn");
+    btnq.forEach((element) => element.addEventListener("click", (e) => {
+        playRound(e.target.id,getComputerChoice());
+        if(P == PTW) console.log("You Win!");
+        else if(CPU == PTW) console.log("You Lose!");
+    }));
+
+
 })
 
 
-const btnq = document.querySelectorAll(".btn");
-btnq.forEach((element) => element.addEventListener("click", (e) => {
-    playRound(e.target.id,getComputerChoice());
-    if(P === PTW) console.log("You Win!");
-    else if(CPU === PTW) console.log("You Lose!");
-}));
 
 
 
 
-//global variables
-let PTW = 0;    //PTW=points to win
-let P = 0;      //P=player points
-let CPU = 0;    //CPU=computer points
+
+
+
+
 
